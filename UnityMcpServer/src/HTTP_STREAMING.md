@@ -4,7 +4,7 @@ This guide explains how to use the HTTP/SSE transport mode to connect to Unity M
 
 ## Overview
 
-The Unity MCP Server now supports HTTP Server-Sent Events (SSE) transport in addition to the standard stdio transport. This allows remote MCP clients to connect to the server over HTTP, making it possible to run Unity and the MCP Server on a Windows PC while connecting from a remote MCP client (e.g., on a Linux server).
+The Unity MCP Server uses HTTP Server-Sent Events (SSE) transport by default, allowing both local and remote MCP clients to connect to the server over HTTP. This makes it possible to run Unity and the MCP Server on a Windows PC while connecting from any MCP client, whether local or remote. The server also supports stdio transport for legacy compatibility.
 
 ## Configuration
 
@@ -12,7 +12,7 @@ The Unity MCP Server now supports HTTP Server-Sent Events (SSE) transport in add
 
 You can configure the HTTP server using environment variables:
 
-- `UNITY_MCP_TRANSPORT`: Set to `"http"` to enable HTTP mode (default: `"stdio"`)
+- `UNITY_MCP_TRANSPORT`: Set to `"stdio"` for legacy stdio mode (default: `"http"`)
 - `UNITY_MCP_HTTP_HOST`: HTTP server host (default: `"0.0.0.0"`)
 - `UNITY_MCP_HTTP_PORT`: HTTP server port (default: `6501`)
 - `UNITY_MCP_UNITY_HOST`: Unity Editor host (default: `"localhost"`)
@@ -96,6 +96,27 @@ UNITY_MCP_TRANSPORT=http UNITY_MCP_HTTP_HOST=0.0.0.0 uv run server.py
 1. **Connection refused**: Check firewall settings and ensure the server is running
 2. **Unity not responding**: Verify Unity Editor is running with the MCP Bridge on the same machine as the HTTP server
 3. **Port already in use**: Change the port using `--port` argument or environment variable
+
+## Switching to stdio Mode
+
+If you prefer the legacy stdio transport (where the MCP client launches the server):
+
+1. Set the environment variable:
+   ```bash
+   set UNITY_MCP_TRANSPORT=stdio
+   ```
+
+2. Update your MCP client configuration to use command/args instead of URL:
+   ```json
+   {
+     "mcpServers": {
+       "unityMCP": {
+         "command": "uv",
+         "args": ["--directory", "C:\\path\\to\\UnityMcpServer\\src", "run", "server.py"]
+       }
+     }
+   }
+   ```
 
 ## Architecture
 

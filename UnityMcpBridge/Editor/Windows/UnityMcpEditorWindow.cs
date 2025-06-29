@@ -276,11 +276,11 @@ namespace UnityMcpBridge.Editor.Windows
 
         private string WriteToConfig(string pythonDir, string configPath)
         {
-            // Create configuration object for unityMCP
+            // Create configuration object for unityMCP using HTTP/SSE transport
             McpConfigServer unityMCPConfig = new()
             {
-                command = "uv",
-                args = new[] { "--directory", pythonDir, "run", "server.py" },
+                url = "http://localhost:6501/sse",
+                transport = "sse"
             };
 
             JsonSerializerSettings jsonSettings = new() { Formatting = Formatting.Indented };

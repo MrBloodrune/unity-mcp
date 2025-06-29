@@ -11,5 +11,11 @@ namespace UnityMcpBridge.Editor.Models
 
         [JsonProperty("args")]
         public string[] args;
+        
+        [JsonProperty("url")]
+        public string url;
+        
+        [JsonProperty("transport")]
+        public string transport;
     }
 }

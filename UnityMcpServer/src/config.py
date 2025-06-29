@@ -20,7 +20,7 @@ class ServerConfig:
     http_port: int = 6501
     
     # Transport settings
-    transport: str = "stdio"  # "stdio" or "http"
+    transport: str = "http"  # "stdio" or "http" - default is http for remote access
     
     # Connection settings
     connection_timeout: float = 86400.0  # 24 hours timeout
