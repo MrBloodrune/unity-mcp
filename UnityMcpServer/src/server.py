@@ -69,4 +69,10 @@ def asset_creation_strategy() -> str:
 
 # Run the server
 if __name__ == "__main__":
-    mcp.run(transport='stdio')
+    # Determine transport from config
+    if config.transport == "http":
+        logger.info(f"Starting Unity MCP Server with HTTP transport on {config.http_host}:{config.http_port}")
+        mcp.run(transport='sse', host=config.http_host, port=config.http_port)
+    else:
+        logger.info("Starting Unity MCP Server with stdio transport")
+        mcp.run(transport='stdio')

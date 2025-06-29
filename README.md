@@ -40,6 +40,14 @@ Unity MCP connects your tools using two components:
 
 **Flow:** `[Your LLM via MCP Client] <-> [Unity MCP Server (Python)] <-> [Unity MCP Bridge (Unity Editor)]`
 
+### Transport Modes 🌐
+
+Unity MCP Server supports two transport modes:
+- **stdio (default):** Standard input/output for local connections
+- **HTTP/SSE:** HTTP Server-Sent Events for remote connections
+
+The HTTP mode allows remote MCP clients to connect to your Unity MCP Server, enabling scenarios like running Unity on Windows while your MCP client runs on a remote Linux server.
+
 ---
 
 ## Installation ⚙️
@@ -174,7 +182,21 @@ If Auto-Configure fails or you use a different client:
 3. **Interact!** Unity tools should now be available in your MCP Client.
     
     Example Prompt: `Create a 3D player controller.`
-    
+
+### Remote Connection via HTTP 🌐
+
+To allow remote MCP clients to connect:
+
+1. On your Windows machine (with Unity), run:
+   ```bash
+   cd UnityMcpServer\src
+   python run_http_server.py --host 0.0.0.0
+   ```
+
+2. On the remote machine, configure your MCP client to connect via HTTP:
+   - Endpoint: `http://<windows-pc-ip>:6501/sse`
+   - See [HTTP_STREAMING.md](UnityMcpServer/src/HTTP_STREAMING.md) for detailed setup
+
 
 ---
 
